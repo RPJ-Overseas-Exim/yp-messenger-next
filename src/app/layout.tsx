@@ -1,9 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import { Navbar } from "@/components/Navbar"
 import { geistSans, geistMono, poppinsRegular, poppinsBold, poppinsBlack } from "./fonts/fonts"
 import { ThemeProvider } from "@/components/context/ThemeProvider";
-import { SideBar } from "@/components/SideBar";
 
 
 export const metadata: Metadata = {
