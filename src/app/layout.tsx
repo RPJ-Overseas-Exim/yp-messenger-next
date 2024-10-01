@@ -3,6 +3,7 @@ import "./globals.css";
 import { Navbar } from "@/components/Navbar"
 import { geistSans, geistMono, poppinsRegular, poppinsBold, poppinsBlack } from "./fonts/fonts"
 import { ThemeProvider } from "@/components/context/ThemeProvider";
+import { SideBar } from "@/components/SideBar";
 
 
 export const metadata: Metadata = {
@@ -22,7 +23,6 @@ export default function RootLayout({
                 className={`${geistSans.variable} ${poppinsRegular.variable} ${poppinsBold.variable} ${poppinsBlack.variable} ${geistMono.variable} antialiased`}
             >
                 <ThemeProvider attribute="class">
-                    <Navbar />
                     {children}
                 </ThemeProvider>
             </body>
