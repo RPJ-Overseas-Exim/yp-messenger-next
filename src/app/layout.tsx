@@ -5,7 +5,7 @@ import { ThemeProvider } from "@/components/context/ThemeProvider";
 
 
 export const metadata: Metadata = {
-    title: "WWC",
+    title: "WWC - messenger",
     description: "World Wide Clothing messenger for WWC customers to place orders best prices in the market.",
 };
 
@@ -18,7 +18,7 @@ export default function RootLayout({
     return (
         <html lang="en">
             <body
-                className={`${geistSans.variable} ${poppinsRegular.variable} ${poppinsBold.variable} ${poppinsBlack.variable} ${geistMono.variable} antialiased`}
+                className={`${geistSans.variable} ${poppinsRegular.variable} ${poppinsBold.variable} ${poppinsBlack.variable} ${geistMono.variable} antialiased h-dvh`}
             >
                 <ThemeProvider attribute="class">
                     {children}

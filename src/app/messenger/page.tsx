@@ -1,9 +1,9 @@
 import React from "react"
-import { Chat } from "@/components/chats/Chat"
+import { Chat } from "@/components/messenger/chats/Chat"
 
 export default function Chats() {
     return (
-        <main className="mx-auto w-11/12">
+        <main className="h-full">
             <Chat />
         </main>
     )

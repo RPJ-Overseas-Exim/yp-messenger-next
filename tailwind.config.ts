@@ -9,8 +9,14 @@ const config: Config = {
     ],
     theme: {
         extend: {
+            fontSize:{
+                xxs:"0.6rem"
+            },
             fontFamily: {
                 poppins: ["var(--font-poppins-reg)"]
+            },
+            gridTemplateRows: {
+                mainLayout: "auto 1fr auto"
             },
             colors: {
                 background: 'hsl(var(--background))',
@@ -57,7 +63,9 @@ const config: Config = {
             borderRadius: {
                 lg: 'var(--radius)',
                 md: 'calc(var(--radius) - 2px)',
-                sm: 'calc(var(--radius) - 4px)'
+                sm: 'calc(var(--radius) - 4px)',
+                messageReceived: "0 var(--radius) var(--radius) var(--radius)",
+                messageSent: "var(--radius) 0 var(--radius) var(--radius)",
             }
         }
     },
