@@ -4,7 +4,7 @@ import { SideBar } from "@/components/SideBar"
 
 export default function MessengerLayout({ children }: { children: React.ReactNode }) {
     return (
-        <div className="max-h-full grid grid-rows-mainLayout">
+        <div className="h-full max-h-full grid grid-rows-mainLayout">
             <Navbar />
             {children}
             <SideBar />
