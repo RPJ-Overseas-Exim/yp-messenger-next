@@ -8,8 +8,13 @@ import { CustomFormField } from "@/components/CustomFormField"
 import { LoginFormSchema } from "@/lib/formSchema"
 import type { LoginForm } from "@/lib/types"
 import Link from "next/link"
+import { Login } from "@/lib/server-actions/Login"
+import { useRouter } from "next/navigation"
+import { toast } from "sonner"
 
 export default function Home() {
+    const router = useRouter()
+
     const form = useForm<LoginForm>({
         resolver: zodResolver(LoginFormSchema),
         defaultValues: {
@@ -18,14 +23,27 @@ export default function Home() {
         }
     })
 
-    const handleSubmit = (values: LoginForm) => {
-        console.log(values)
+    const handleSubmit = async (values: LoginForm) => {
+        try {
+            const { email, password } = values
+            const login = await Login({ email, password })
+
+            if (login !== false && login?.success) {
+                toast.success("Login success")
+                return router.push("/messenger")
+            } else {
+                toast.error("Failed to login")
+            }
+
+        } catch (err) {
+            toast.error("Something went wrong. Try again later")
+        }
     }
 
     return (
-        <div className="w-full h-screen bg-muted flex flex-col gap-y-2 items-center justify-center">
+        <div className="w-full h-screen bg-gradient-to-b from-blue-600 to-transparent flex flex-col gap-y-2 items-center justify-center">
             <Form {...form} >
-                <form onSubmit={form.handleSubmit(handleSubmit)} className="max-w-[400px] space-y-5 w-3/4 bg-background rounded-xl py-5">
+                <form onSubmit={form.handleSubmit(handleSubmit)} className="max-w-[400px] space-y-5 w-11/12 bg-background rounded-xl py-5">
                     <legend className="text-2xl font-bold text-center font-poppins" >Login</legend>
 
                     <hr className="border border-border w-full rounded-lg" />

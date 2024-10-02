@@ -11,9 +11,9 @@ export const env = createEnv({
     },
     // If you're using Next.js < 13.4.4, you'll need to specify the runtimeEnv manually
     runtimeEnv: {
-        NEXT_PUBLIC_API_URL: process.env.API_URL,
+        NEXT_PUBLIC_API_URL: process.env.NEXT_PUBLIC_API_URL,
         API_URL: process.env.API_URL,
-        API_VER: process.env.API_VER
+        API_VER: Number(process.env.API_VER)
     },
     // For Next.js >= 13.4.4, you only need to destructure client variables:
     // experimental__runtimeEnv: {

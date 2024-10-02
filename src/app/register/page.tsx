@@ -23,9 +23,9 @@ export default function Register() {
     }
 
     return (
-        <div className="w-full h-screen bg-muted flex flex-col gap-y-2 items-center justify-center">
+        <div className="w-full h-screen bg-gradient-to-b from-blue-600 to-transparent flex flex-col gap-y-2 items-center justify-center">
             <Form {...form}>
-                <form onSubmit={form.handleSubmit(handleSubmit)} className="max-w-[400px] space-y-5 w-3/4 bg-background rounded-xl py-5">
+                <form onSubmit={form.handleSubmit(handleSubmit)} className="max-w-[400px] space-y-5 w-11/12 bg-background rounded-xl py-5">
                     <legend className="text-2xl font-bold text-center font-poppins" >Register</legend>
 
                     <hr className="border border-border w-full rounded-lg" />

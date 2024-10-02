@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { geistSans, geistMono, poppinsRegular, poppinsBold, poppinsBlack } from "./fonts/fonts"
 import { ThemeProvider } from "@/components/context/ThemeProvider";
-
+import { Toaster } from "@/components/ui/sonner"
 
 export const metadata: Metadata = {
     title: "WWC - messenger",
@@ -23,6 +23,7 @@ export default function RootLayout({
                 <ThemeProvider attribute="class">
                     {children}
                 </ThemeProvider>
+                <Toaster richColors closeButton />
             </body>
         </html>
     );
