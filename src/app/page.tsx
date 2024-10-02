@@ -1,17 +1,13 @@
 "use client"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { z } from "zod"
 
 import { Button } from "@/components/ui/button"
 import { Form } from "@/components/ui/form"
 import { CustomFormField } from "@/components/CustomFormField"
-
-export const LoginFormSchema = z.object({
-    email: z.string().email(),
-    password: z.string().min(3).max(16),
-})
-type LoginForm = z.infer<typeof LoginFormSchema>
+import { LoginFormSchema } from "@/lib/formSchema"
+import type { LoginForm } from "@/lib/types"
+import Link from "next/link"
 
 export default function Home() {
     const form = useForm<LoginForm>({
@@ -27,7 +23,7 @@ export default function Home() {
     }
 
     return (
-        <div className="w-full h-screen bg-muted flex items-center justify-center">
+        <div className="w-full h-screen bg-muted flex flex-col gap-y-2 items-center justify-center">
             <Form {...form} >
                 <form onSubmit={form.handleSubmit(handleSubmit)} className="max-w-[400px] space-y-5 w-3/4 bg-background rounded-xl py-5">
                     <legend className="text-2xl font-bold text-center font-poppins" >Login</legend>
@@ -51,10 +47,12 @@ export default function Home() {
                             placeholder={"Enter your password"}
                         />
 
-                        <Button type="submit">Submit</Button>
+                        <Button type="submit" className="w-full text-lg font-bold">Login</Button>
                     </div>
                 </form>
             </Form>
+
+            <div className="text-lg text-muted-foreground">Dont have an account? <Link href="/register" className="text-amber-600">Register</Link></div>
         </div>
     );
 }
