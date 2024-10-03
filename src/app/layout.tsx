@@ -3,8 +3,8 @@ import "./globals.css";
 import { geistSans, geistMono, poppinsRegular, poppinsBold, poppinsBlack } from "./fonts/fonts"
 import { ThemeProvider } from "@/components/context/ThemeProvider";
 import { Toaster } from "@/components/ui/sonner"
-import { JotaiProvider } from "@/components/context/JotaiProvider";
 import { Provider } from "jotai"
+import { env } from "@/env";
 
 export const metadata: Metadata = {
     title: "WWC - messenger",
@@ -17,7 +17,6 @@ export default function RootLayout({
     children: React.ReactNode;
 }>) {
 
-
     return (
         <html lang="en">
             <body
@@ -25,9 +24,7 @@ export default function RootLayout({
             >
                 <ThemeProvider attribute="class">
                     <Provider>
-                        <JotaiProvider>
                             {children}
-                        </JotaiProvider>
                     </Provider>
                 </ThemeProvider>
                 <Toaster richColors closeButton />

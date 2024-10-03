@@ -1,8 +1,7 @@
 "use client"
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { RegisterFormSchema } from "@/lib/types/formSchema"
-import type { RegisterForm } from "@/lib/types/types"
+import { RegisterFormSchema, type RegisterForm } from "@/lib/types/formSchema"
 import { CustomFormField } from "@/components/CustomFormField";
 import { Form } from "@/components/ui/form"
 import { Button } from "@/components/ui/button";
