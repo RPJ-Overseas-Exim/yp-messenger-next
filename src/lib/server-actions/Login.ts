@@ -1,27 +1,21 @@
 "use server"
-import { env } from "@/env"
 import { cookies } from "next/headers"
+import { PostRequest } from "./request-helpers/PostRequest";
 
 
 export async function Login({ email, password }: { email: string; password: string; }) {
     try {
-        const res = await fetch(env.API_URL + String(env.API_VER) + "/login", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                credentials: "include"
-            },
-            body: JSON.stringify({ email, password })
-        })
+        const res = await PostRequest("/login", { email, password })
+        const { token, success, role } = res
 
-        const { role, success, token } = await res.json()
-
-        const cookieStore = cookies()
-        cookieStore.set("Authentication", token)
+        if (token) {
+            const cookieStore = cookies()
+            cookieStore.set("Authentication", token)
+        }
 
         return { success, role }
     } catch (err) {
-        console.log("Response error: ", err)
+        console.log("Login response error: ", err)
         return false
     }
 }
