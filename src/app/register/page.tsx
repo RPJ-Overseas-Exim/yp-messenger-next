@@ -27,7 +27,7 @@ export default function Register() {
                 <form onSubmit={form.handleSubmit(handleSubmit)} className="max-w-[400px] space-y-5 w-11/12 bg-background rounded-xl py-5">
                     <legend className="text-2xl font-bold text-center font-poppins" >Register</legend>
 
-                    <hr className="border border-transparent w-full rounded-lg" />
+                    <hr className="border border-border w-full rounded-lg" />
 
                     <div className="px-5 space-y-5">
                         <CustomFormField<RegisterForm>

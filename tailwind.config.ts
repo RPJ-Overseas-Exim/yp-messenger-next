@@ -1,4 +1,5 @@
 import type { Config } from "tailwindcss";
+import plugin from 'tailwindcss/plugin'
 
 const config: Config = {
     darkMode: ["class"],
@@ -9,8 +10,8 @@ const config: Config = {
     ],
     theme: {
         extend: {
-            fontSize:{
-                xxs:"0.6rem"
+            fontSize: {
+                xxs: "0.6rem"
             },
             fontFamily: {
                 poppins: ["var(--font-poppins-reg)"]
@@ -66,9 +67,24 @@ const config: Config = {
                 sm: 'calc(var(--radius) - 4px)',
                 messageReceived: "0 var(--radius) var(--radius) var(--radius)",
                 messageSent: "var(--radius) 0 var(--radius) var(--radius)",
+            },
+            animation: {
+                "spinner1": "spin 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite"
             }
         }
     },
-    plugins: [require("tailwindcss-animate")],
+    plugins: [
+        require("tailwindcss-animate"),
+        plugin(function({ matchUtilities, theme }) {
+            matchUtilities(
+                {
+                    'animate-delay': (value) => ({
+                        animationDelay: value,
+                    }),
+                },
+                { values: theme('transitionDelay') }
+            )
+        }),
+    ],
 };
 export default config;

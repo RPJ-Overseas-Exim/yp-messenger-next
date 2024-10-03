@@ -57,7 +57,7 @@ export function JotaiProvider({ children }: { children: ReactNode }) {
         }
     }, [initializeSocket])
 
-    if (isLoading) return <Spinner />
+    if (isLoading) return <Spinner className={""} />
 
     return children
 }
