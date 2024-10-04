@@ -7,7 +7,8 @@ import { env } from "@/env";
 export async function Login({ email, password }: { email: string; password: string; }) {
     try {
         const res = await PostRequest("/login", { email, password })
-        const { token, success, role } = res
+        console.log("login response: ", res)
+        const { token, success, role, message } = res
 
         if (token) {
             const cookieStore = cookies()
@@ -15,9 +16,9 @@ export async function Login({ email, password }: { email: string; password: stri
             cookieStore.set("Authentication", token, { httpOnly: true, sameSite: "lax", expires })
         }
 
-        return { success, role }
+        return { success, role, message }
     } catch (err) {
         console.log("Login response error: ", err)
-        return false
+        return {}
     }
 }

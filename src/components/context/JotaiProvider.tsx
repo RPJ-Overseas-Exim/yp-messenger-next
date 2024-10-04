@@ -20,7 +20,6 @@ export function JotaiProvider({ children }: { children: ReactNode }) {
     const fetchRole = useCallback(async () => {
         try {
             const userData = await GetRequest("/user")
-            console.log("usedata: ", userData)
             setRole(() => userData?.user?.role)
             return userData?.accessToken
         } catch (err) {
@@ -40,7 +39,10 @@ export function JotaiProvider({ children }: { children: ReactNode }) {
         socket?.on("notification", ({ event, message }) => {
             switch (event) {
                 case "newMessage":
-                    if (message) console.log(message)
+                    revalPath("/messenger")
+                    toast.success("New message", { position: "top-center" })
+                    break;
+                case "newMessageSent":
                     revalPath("/messenger")
                     break;
                 case "error":
@@ -70,6 +72,7 @@ export function JotaiProvider({ children }: { children: ReactNode }) {
             const accessToken = await fetchRole()
             initializeSocket(accessToken)
         })()
+
         return () => {
             socket?.close()
         }

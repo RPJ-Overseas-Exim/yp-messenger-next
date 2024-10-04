@@ -33,13 +33,13 @@ export default function Home() {
             const { email, password } = values
             const login = await Login({ email, password })
 
-            if (login !== false && login?.success) {
-                toast.success("Login success", { position: "top-center" })
+            if (login?.success) {
+                toast.success(login?.message || "Login success", { position: "top-center" })
                 setRole(login?.role)
                 setIsLoading(false)
                 return router.push("/messenger")
             } else {
-                toast.error("Failed to login", { position: "top-center" })
+                toast.error(login?.message || "Failed to login", { position: "top-center" })
             }
         } catch (err) {
             toast.error("Something went wrong. Try again later", { position: "top-center" })

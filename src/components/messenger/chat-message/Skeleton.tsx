@@ -15,8 +15,8 @@ export function ChatMessageSkeleton() {
             </div>
 
             <div className="w-full h-[100px] px-3 flex gap-x-2 justify-between">
-                <Skeleton className="w-5/6 h-[50px] rounded-lg" />
-                <Skeleton className="w-1/6 h-[50px] rounded-lg" />
+                <Skeleton className="w-5/6 h-[50px] md:flex-1 rounded-lg" />
+                <Skeleton className="w-1/6 md:w-[60px] h-[50px] rounded-lg" />
             </div>
         </div>
     )

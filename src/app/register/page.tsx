@@ -6,6 +6,8 @@ import { CustomFormField } from "@/components/CustomFormField";
 import { Form } from "@/components/ui/form"
 import { Button } from "@/components/ui/button";
 import Link from "next/link"
+import { PostRequest } from "@/lib/server-actions/request-helpers/PostRequest";
+import { toast } from "sonner";
 
 export default function Register() {
     const form = useForm<RegisterForm>({
@@ -13,12 +15,34 @@ export default function Register() {
         defaultValues: {
             username: "",
             email: "",
-            password: ""
+            password: "",
+            cpassword: ""
         }
     })
 
-    const handleSubmit = (values: RegisterForm) => {
-        console.log(values)
+    const handleSubmit = async (values: RegisterForm) => {
+        if (!values.cpassword || !values.email || !values.password || !values.username) {
+            return toast.warning("Please provide all the credentials")
+        }
+
+        if (values.cpassword !== values.password) {
+            return toast.error("Confirm password and password is different", { position: "top-center" })
+        }
+
+        try {
+            const resp = await PostRequest("/register", values)
+            console.log("Register response: ", resp)
+            if (resp?.success) {
+                toast.success(resp?.message || "Registered successfully", { position: "top-center" })
+            } else {
+                toast.error(resp?.message || "Something went wrong", { position: "top-center" })
+            }
+        } catch (err) {
+            console.log("Register error: ", err)
+            if (err instanceof Error) {
+                toast.error(err.message, { position: "top-center" })
+            }
+        }
     }
 
     return (
