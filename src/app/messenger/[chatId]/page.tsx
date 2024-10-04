@@ -13,7 +13,6 @@ export default async function ChatMessages({ params }: { params: { [x: string]: 
             messages = res.data.messages
             userId = res.data.userId
         }
-        console.log(JSON.stringify(res))
     } catch (e) {
         console.log(e)
     }

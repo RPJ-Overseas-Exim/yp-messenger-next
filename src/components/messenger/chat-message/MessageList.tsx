@@ -23,6 +23,7 @@ export function MessageList({
 
     React.useEffect(() => {
         socket?.emit("joinChat", chatId)
+
         return () => {
             socket?.emit("leaveChat", chatId)
         }
@@ -40,13 +41,19 @@ export function MessageList({
                 {
                     messages?.map((message, index) => {
                         const date = new Date(message.date)
+                        let nDate = new Date(0, 0, 0)
+                        const lastSeenDate = (new Date(lastSeen as string)).toISOString()
+
                         const currentDate = date.toLocaleDateString()
                         let nextDate: string = "";
                         if (index < messages.length - 1) {
-                            nextDate = (new Date(messages[index + 1].date)).toLocaleDateString()
+                            nDate = new Date(messages[index + 1].date)
+                            nextDate = nDate.toLocaleDateString()
                         }
+
                         const newMessageCondition = (message.senderId !== userId
-                            && date.toISOString() > (new Date(lastSeen as string)).toISOString())
+                            && date.toISOString() > lastSeenDate
+                            && nDate.toISOString() < lastSeenDate)
 
                         return (
                             <>

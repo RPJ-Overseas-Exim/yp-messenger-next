@@ -73,7 +73,7 @@ export default function Home() {
                             placeholder={"Enter your password"}
                         />
 
-                        <Button type="submit" className="w-full text-lg font-bold">
+                        <Button type="submit" className="w-full text-lg font-bold" disabled={isLoading}>
                             {isLoading && <Loader2 className="w-4 h-4 animate-spin mr-2" />}
                             Login
                         </Button>
@@ -81,7 +81,10 @@ export default function Home() {
                 </form>
             </Form>
 
-            <div className="text-lg text-muted-foreground">Dont have an account? <Link href="/register" className="text-amber-600">Register</Link></div>
+            <div className="text-lg text-muted-foreground">
+                Dont have an account?
+                <Link href="/register" className="text-amber-600">Register</Link>
+            </div>
         </div>
     );
 }

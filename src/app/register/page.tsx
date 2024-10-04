@@ -8,8 +8,13 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link"
 import { PostRequest } from "@/lib/server-actions/request-helpers/PostRequest";
 import { toast } from "sonner";
+import { useState } from "react";
+import { Loader2 } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 export default function Register() {
+    const [isLoading, setIsLoading] = useState(false)
+    const router = useRouter()
     const form = useForm<RegisterForm>({
         resolver: zodResolver(RegisterFormSchema),
         defaultValues: {
@@ -29,11 +34,14 @@ export default function Register() {
             return toast.error("Confirm password and password is different", { position: "top-center" })
         }
 
+        setIsLoading(true)
         try {
             const resp = await PostRequest("/register", values)
-            console.log("Register response: ", resp)
+
             if (resp?.success) {
+                setIsLoading(false)
                 toast.success(resp?.message || "Registered successfully", { position: "top-center" })
+                return router.push("/")
             } else {
                 toast.error(resp?.message || "Something went wrong", { position: "top-center" })
             }
@@ -42,6 +50,8 @@ export default function Register() {
             if (err instanceof Error) {
                 toast.error(err.message, { position: "top-center" })
             }
+        } finally {
+            setIsLoading(false)
         }
     }
 
@@ -86,13 +96,19 @@ export default function Register() {
                             placeholder="Enter confirm password"
                         />
 
-                        <Button type="submit" className="w-full text-lg font-bold" >Register</Button>
+                        <Button type="submit" className="w-full text-lg font-bold" disabled={isLoading} >
+                            {isLoading && <Loader2 className="w-4 h-4 animate-spin mr-2" />}
+                            Register
+                        </Button>
 
                     </div>
                 </form>
             </Form>
 
-            <div className="text-lg text-muted-foreground">Already have an account? <Link href="/" className="text-amber-600">Login</Link></div>
+            <div className="text-lg text-muted-foreground">
+                Already have an account?
+                <Link href="/" className="text-amber-600">Login</Link>
+            </div>
         </div>
     )
 
