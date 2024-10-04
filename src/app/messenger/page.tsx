@@ -1,7 +1,7 @@
 import React from "react"
 import { Chat } from "@/components/messenger/chats/Chat"
 import { GetRequest } from "@/lib/server-actions/request-helpers/GetRequest"
-import { Chat as ChatType } from "@/lib/types/types"
+import { Chat as ChatType } from "@/lib/types/dto"
 
 export default async function Chats() {
     let chats: ChatType[] | undefined = undefined;
@@ -17,7 +17,7 @@ export default async function Chats() {
         <main className="h-full">
             {
                 chats?.map(chat => {
-                    return <Chat key={chat.id} chatId={chat.id} name={chat.memberTwo} lastMessage={chat.lastMessage || ""} />
+                    return <Chat key={chat.id} chat={chat} />
                 })
             }
         </main>
