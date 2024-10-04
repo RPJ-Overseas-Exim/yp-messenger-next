@@ -43,6 +43,7 @@ export function JotaiProvider({ children }: { children: ReactNode }) {
                     toast.success("New message", { position: "top-center" })
                     break;
                 case "newMessageSent":
+                    console.log("revalled")
                     revalPath("/messenger")
                     break;
                 case "error":

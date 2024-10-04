@@ -1,25 +1,63 @@
 "use client"
-import React, { useRef } from "react"
-import type { Message as MessageType } from "@/lib/types/dto"
+
+import React, { useRef, useState } from "react"
+import { Message as MessageType } from "@/lib/types/dto"
 import { Message } from "./Message";
 import { useAtomValue } from "jotai";
 import { socketAtom } from "@/lib/jotai/atoms";
+import { Spinner } from "@/components/Spinner";
+import getMessages from "@/lib/server-actions/getMessages";
 import { useSearchParams } from "next/navigation";
 import { DateLine } from "./DateLine"
 import { NewMessageLine } from "./NewMessageLine"
 
 export function MessageList({
     chatId,
-    messages,
-    userId
+    initialMessages,
+    count,
+    userId,
 }: {
-    chatId: string;
-    messages: MessageType[] | undefined,
-    userId: string | undefined;
+    chatId: string,
+    initialMessages: MessageType[],
+    userId: string | undefined,
+    count: number
 }) {
     const socket = useAtomValue(socketAtom)
     const messageListRef = useRef<HTMLElement>(null)
-    const lastSeen = useSearchParams().get("lastSeen")
+    const topRef = useRef<HTMLElement>(null)
+    const [messages, setMessages] = useState(initialMessages)
+    const lastSeen = useSearchParams().get("lastseen")
+    const [page, setPage] = useState(0)
+
+    const observeSpinner = () => {
+        let timerId: NodeJS.Timeout | undefined = undefined;
+
+        return (entries: IntersectionObserverEntry[]) => {
+            clearTimeout(timerId)
+            timerId = setTimeout(async () => {
+                const [entry] = entries
+
+                if (entry?.isIntersecting && messages.length < count) {
+                    try {
+                        const newMessages = (await getMessages(chatId, (page + 1) * 20))?.data?.messages
+                        if (newMessages?.length > 0) {
+                            setMessages((prevMessages) => {
+                                return [
+                                    ...(prevMessages || []),
+                                    ...(newMessages || [])
+                                ]
+                            })
+                            setPage((page) => page + 1)
+                        }
+
+
+                    } catch (e) {
+                        console.log(e)
+                    }
+                }
+            }, 3000)
+        }
+    }
 
     React.useEffect(() => {
         socket?.emit("joinChat", chatId)
@@ -35,47 +73,80 @@ export function MessageList({
         }
     }, [messageListRef.current])
 
+    React.useEffect(() => {
+        const observer = new IntersectionObserver(observeSpinner(), {
+            rootMargin: "0px",
+            threshold: 0
+        })
+        if (topRef?.current) {
+            observer.observe(topRef.current)
+        }
+        return () => {
+            if (topRef?.current)
+                observer.unobserve(topRef.current)
+        }
+    }, [observeSpinner, topRef?.current])
+
+    React.useEffect(() => {
+        if (initialMessages?.[0].content !== messages?.[0].content) {
+            setMessages(initialMessages)
+            setPage(0)
+        }
+    }, [initialMessages])
+
     return (
         <section className="bg-muted max-h-full overflow-auto flex-1" ref={messageListRef}>
             <div className="w-[95%] mx-auto">
                 {
-                    messages?.map((message, index) => {
-                        const date = new Date(message.date)
-                        let nDate = new Date(0, 0, 0)
-                        const lastSeenDate = (new Date(lastSeen as string)).toISOString()
-
-                        const currentDate = date.toLocaleDateString()
-                        let nextDate: string = "";
-                        if (index < messages.length - 1) {
-                            nDate = new Date(messages[index + 1].date)
-                            nextDate = nDate.toLocaleDateString()
-                        }
-
-                        const newMessageCondition = (message.senderId !== userId
-                            && date.toISOString() > lastSeenDate
-                            && nDate.toISOString() < lastSeenDate)
-
-                        return (
-                            <>
-                                {!nextDate.length && <DateLine date={currentDate} />}
-                                {nextDate.length > 0 && currentDate > nextDate && <DateLine date={currentDate} />}
-                                {newMessageCondition && <NewMessageLine />}
-
+                    messages?.length === 0 ? (
+                        <p className="flex justify-center my-4 text-amber-500">No messages, Say Hi!</p>
+                    ) : (
+                        <>
+                            <span ref={topRef} className="block">
                                 {
-                                    message.senderId === userId ?
-                                        <Message time={date.toLocaleTimeString()} self={true} key={message.id}>{message.content}</Message>
-                                        : (
-                                            <Message time={date.toLocaleTimeString()} key={message.id}>{message.content}</Message>
-                                        )
+                                    count === messages?.length
+                                        ? <span className="flex my-2 justify-center text-xs text-muted-foreground">No more messages</span>
+                                        : <Spinner className="w-8 h-8 my-4" />
                                 }
-                            </>
-                        )
-                    }).reverse()
+
+                            </span>
+                            {
+                                messages?.map((message, index) => generateMessage(messages, message, index, userId, lastSeen)).reverse()
+                            }
+                        </>
+                    )
                 }
-            </div>
-        </section>
+            </div >
+        </section >
     )
 }
 
+const generateMessage = (messages: MessageType[], message: MessageType, index: number, userId: string | undefined, lastSeen: string | null) => {
+    const date = new Date(message.date)
+    let nDate = new Date(0, 0, 0)
+    const lastSeenDate = (new Date(lastSeen as string)).toISOString()
 
+    const currentDate = date.toLocaleDateString()
+    let nextDate: string = "";
+    if (index < messages.length - 1) {
+        nDate = new Date(messages[index + 1].date)
+        nextDate = nDate.toLocaleDateString()
+    }
 
+    const newMessageCondition = (message.senderId !== userId
+        && date.toISOString() > lastSeenDate
+        && nDate.toISOString() < lastSeenDate)
+
+    return (
+        <div key={message.id}>
+            {!nextDate.length && <DateLine date={currentDate} />}
+            {nextDate.length > 0 && currentDate > nextDate && <DateLine date={currentDate} />}
+            {newMessageCondition && <NewMessageLine />}
+            {
+                message.senderId === userId
+                    ? <Message time={date.toLocaleTimeString()} self={true} >{message.content}</Message>
+                    : <Message time={date.toLocaleTimeString()}>{message.content}</Message>
+            }
+        </div >
+    )
+}
