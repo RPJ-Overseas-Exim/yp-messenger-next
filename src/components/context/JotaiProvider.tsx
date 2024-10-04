@@ -10,6 +10,7 @@ import { Spinner } from "../Spinner"
 import { env } from "@/env"
 import { ClientToServerEvents, ServerToclientEvents } from "@/lib/types/socket"
 import revalPath from "@/lib/server-actions/revalPath"
+import { toast } from "sonner"
 
 export function JotaiProvider({ children }: { children: ReactNode }) {
     const [isLoading, setIsLoading] = useState(true)
@@ -18,8 +19,10 @@ export function JotaiProvider({ children }: { children: ReactNode }) {
 
     const fetchRole = useCallback(async () => {
         try {
-            const userRole = await GetRequest("/user")
-            setRole(() => userRole?.user?.role)
+            const userData = await GetRequest("/user")
+            console.log("usedata: ", userData)
+            setRole(() => userData?.user?.role)
+            return userData?.accessToken
         } catch (err) {
             console.log(err)
         } finally {
@@ -27,9 +30,11 @@ export function JotaiProvider({ children }: { children: ReactNode }) {
         }
     }, [])
 
-    const initializeSocket = useCallback(()=>{
-        const socket:Socket<ServerToclientEvents, ClientToServerEvents> = io(env.NEXT_PUBLIC_API_URL, {
-            withCredentials:true,
+    const initializeSocket = useCallback((accessToken: string) => {
+        const socket: Socket<ServerToclientEvents, ClientToServerEvents> = io(env.NEXT_PUBLIC_API_URL, {
+            auth: {
+                token: accessToken
+            }
         })
 
         socket?.on("notification", ({ event, message }) => {
@@ -37,6 +42,10 @@ export function JotaiProvider({ children }: { children: ReactNode }) {
                 case "newMessage":
                     if (message) console.log(message)
                     revalPath("/messenger")
+                    break;
+                case "error":
+                    console.log(message)
+                    break;
             }
         })
 
@@ -45,14 +54,23 @@ export function JotaiProvider({ children }: { children: ReactNode }) {
             console.log("error")
         })
 
+        socket?.on("connect_error", (err) => console.log("connection error: ", err))
+
+        socket?.on("newChatBroadcast", () => {
+            revalPath("/messenger")
+            toast.success("Broadcast done", { position: "top-center" })
+        })
+
         setSocket(socket)
     }, [])
 
 
     useEffect(() => {
-        fetchRole()
-        initializeSocket()
-        return ()=>{
+        (async () => {
+            const accessToken = await fetchRole()
+            initializeSocket(accessToken)
+        })()
+        return () => {
             socket?.close()
         }
     }, [initializeSocket])

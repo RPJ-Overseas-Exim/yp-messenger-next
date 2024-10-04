@@ -12,7 +12,6 @@ export function SideBar() {
     const role = useAtomValue(roleAtom)
 
     useEffect(() => {
-        console.log("from sidebar: ", role)
         setCondition(path === "/messenger/broadcast" || path === "/messenger/profile" || path === "/messenger")
     }, [path])
 

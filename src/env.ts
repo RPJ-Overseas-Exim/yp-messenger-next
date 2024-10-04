@@ -5,6 +5,7 @@ export const env = createEnv({
     server: {
         API_URL: z.string().url(),
         API_VER: z.number(),
+        JWT_EXPIRE: z.number()
     },
     client: {
         NEXT_PUBLIC_API_URL: z.string().url(),
@@ -15,7 +16,8 @@ export const env = createEnv({
         NEXT_PUBLIC_API_URL: process.env.NEXT_PUBLIC_API_URL,
         API_URL: process.env.API_URL,
         API_VER: Number(process.env.API_VER),
-        NEXT_PUBLIC_NODE_ENV: process.env.NEXT_PUBLIC_NODE_ENV
+        NEXT_PUBLIC_NODE_ENV: process.env.NEXT_PUBLIC_NODE_ENV,
+        JWT_EXPIRE: Number(process.env.JWT_EXPIRE)
     },
     // For Next.js >= 13.4.4, you only need to destructure client variables:
     // experimental__runtimeEnv: {

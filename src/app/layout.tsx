@@ -4,7 +4,6 @@ import { geistSans, geistMono, poppinsRegular, poppinsBold, poppinsBlack } from 
 import { ThemeProvider } from "@/components/context/ThemeProvider";
 import { Toaster } from "@/components/ui/sonner"
 import { Provider } from "jotai"
-import { env } from "@/env";
 
 export const metadata: Metadata = {
     title: "WWC - messenger",
@@ -24,7 +23,7 @@ export default function RootLayout({
             >
                 <ThemeProvider attribute="class">
                     <Provider>
-                            {children}
+                        {children}
                     </Provider>
                 </ThemeProvider>
                 <Toaster richColors closeButton />

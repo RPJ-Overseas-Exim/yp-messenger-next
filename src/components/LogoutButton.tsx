@@ -10,7 +10,7 @@ export function LogoutButton() {
 
     const handleLogout = async () => {
         await Logout()
-        toast.success("Logout successfully!")
+        toast.success("Logout successfully!", { position: "top-center" })
         return router.push("/")
     }
 

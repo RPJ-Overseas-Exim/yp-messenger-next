@@ -10,7 +10,7 @@ export function MessageList({ chatId, messages, userId }: { chatId: string, mess
 
     React.useEffect(() => {
         socket?.emit("joinChat", chatId)
-        return ()=>{
+        return () => {
             socket?.emit("leaveChat", chatId)
         }
     }, [socket])

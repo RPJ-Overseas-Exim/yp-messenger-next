@@ -1,9 +1,24 @@
 "use client"
 import { Button } from "@/components/ui/button"
-import React from "react"
+import { socketAtom } from "@/lib/jotai/atoms"
+import { useAtomValue } from "jotai"
+import React, { useState } from "react"
+import { toast } from "sonner"
 
 export default function Broadcast() {
-    const handleBroadcast = () => {
+    const [message, setMessage] = useState<string>("")
+    const socket = useAtomValue(socketAtom)
+
+    const handleBroadcast = (e: any) => {
+        e.preventDefault()
+        if (!message.length) return toast.warning("Message must contain atleast 1 letter", { position: "top-center" })
+
+        try {
+            console.log(message)
+            socket?.emit("broadcastToChats", message)
+        } catch (err) {
+            console.log(err)
+        }
 
     }
 
@@ -19,6 +34,8 @@ export default function Broadcast() {
                     className="w-full min-h-[250px] h-1/2 rounded-lg p-2"
                     name="message"
                     placeholder="Enter your broadcast message"
+                    value={message}
+                    onChange={(e) => setMessage(e.target.value)}
                 />
 
                 <Button
