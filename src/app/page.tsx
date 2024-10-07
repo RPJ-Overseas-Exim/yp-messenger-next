@@ -42,6 +42,7 @@ export default function Home() {
                 toast.error(login?.message || "Failed to login", { position: "top-center" })
             }
         } catch (err) {
+            console.log(err)
             toast.error("Something went wrong. Try again later", { position: "top-center" })
         } finally {
             setIsLoading(false)

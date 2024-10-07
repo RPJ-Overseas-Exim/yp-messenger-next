@@ -14,7 +14,7 @@ import { FieldValues, Path, UseFormReturn } from "react-hook-form"
 import { Button } from "./ui/button";
 
 export function CustomFormField<T extends FieldValues>({ form, type, title, name, description, placeholder }: {
-    form: UseFormReturn<T, any, undefined>;
+    form: UseFormReturn<T>;
     title: string;
     name: Path<T>;
     type: string;

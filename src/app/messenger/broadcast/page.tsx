@@ -9,7 +9,7 @@ export default function Broadcast() {
     const [message, setMessage] = useState<string>("")
     const socket = useAtomValue(socketAtom)
 
-    const handleBroadcast = (e: any) => {
+    const handleBroadcast = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
         if (!message.length) return toast.warning("Message must contain atleast 1 letter", { position: "top-center" })
 

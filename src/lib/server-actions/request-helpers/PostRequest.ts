@@ -4,7 +4,7 @@ import headers from "./headers"
 import { GetBaseURL } from "./utils"
 
 
-export async function PostRequest(url: string, data: any) {
+export async function PostRequest(url: string, data: { [x: string]: string }) {
     return await (
         await fetch(GetBaseURL() + url, {
             method: "POST",

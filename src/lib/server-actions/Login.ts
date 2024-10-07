@@ -12,7 +12,7 @@ export async function Login({ email, password }: { email: string; password: stri
 
         if (token) {
             const cookieStore = cookies()
-            const expires = new Date(Date.now() + env.JWT_EXPIRE * 24 * 60 * 60 * 1000)
+            const expires = new Date(Date.now() + env.COOKIE_EXPIRE * 24 * 60 * 60 * 1000)
             cookieStore.set("Authentication", token, { httpOnly: true, sameSite: "lax", expires })
         }
 

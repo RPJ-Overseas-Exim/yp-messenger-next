@@ -27,7 +27,7 @@ export function JotaiProvider({ children }: { children: ReactNode }) {
         } finally {
             setIsLoading(false)
         }
-    }, [])
+    }, [setRole])
 
     const initializeSocket = useCallback((accessToken: string) => {
         const socket: Socket<ServerToclientEvents, ClientToServerEvents> = io(env.NEXT_PUBLIC_API_URL, {
@@ -65,7 +65,7 @@ export function JotaiProvider({ children }: { children: ReactNode }) {
         })
 
         setSocket(socket)
-    }, [])
+    }, [setSocket])
 
 
     useEffect(() => {
@@ -77,7 +77,7 @@ export function JotaiProvider({ children }: { children: ReactNode }) {
         return () => {
             socket?.close()
         }
-    }, [initializeSocket])
+    }, [initializeSocket, fetchRole, socket])
 
     if (isLoading) return <Spinner className={""} />
 
