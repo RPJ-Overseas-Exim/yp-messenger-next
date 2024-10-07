@@ -77,14 +77,15 @@ export function MessageList({
             rootMargin: "0px",
             threshold: 0
         })
-        if (topRef?.current) {
-            observer.observe(topRef.current)
+        const topRefCurrent = topRef?.current
+        if (topRefCurrent) {
+            observer.observe(topRefCurrent)
         }
         return () => {
-            if (topRef?.current)
-                observer.unobserve(topRef.current)
+            if (topRefCurrent)
+                observer.unobserve(topRefCurrent)
         }
-    }, [observeSpinner, topRef?.current])
+    }, [observeSpinner])
 
     React.useEffect(() => {
         if (initialMessages?.[0].content !== messages?.[0].content) {
