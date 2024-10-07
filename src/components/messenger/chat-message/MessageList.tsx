@@ -41,6 +41,8 @@ export function MessageList({
                     try {
                         const newMessages = (await getMessages(chatId, (page + 1) * 20))?.data?.messages
                         if (newMessages?.length > 0) {
+                            if (messageListRef?.current)
+                                messageListRef.current.scrollTop = newMessages.length * 42
                             setMessages((prevMessages) => {
                                 return [
                                     ...(prevMessages || []),
@@ -68,10 +70,10 @@ export function MessageList({
     }, [socket])
 
     React.useLayoutEffect(() => {
-        if (messageListRef.current) {
-            messageListRef.current.scrollTop = messageListRef.current.scrollHeight - messageListRef.current.getBoundingClientRect().height
+        if (messageListRef?.current) {
+            messageListRef.current.scrollTop = messageListRef.current.scrollHeight
         }
-    }, [messageListRef.current])
+    }, [])
 
     React.useEffect(() => {
         const observer = new IntersectionObserver(observeSpinner(), {

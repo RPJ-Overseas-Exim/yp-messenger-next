@@ -7,6 +7,7 @@ import { toast } from "sonner";
 import { z } from "zod";
 import { useAtomValue } from "jotai";
 import { socketAtom } from "@/lib/jotai/atoms";
+import { Textarea } from "@/components/ui/textarea";
 
 const messageValidator = z.string().min(1, "").max(1000, "Message Length Cannot be more than 1000 characters")
 
@@ -26,8 +27,8 @@ export function MessageBox({ chatId }: { chatId: string }) {
     }
     return (
         <div className="border-t border-border">
-            <section className="flex gap-2 w-11/12 mx-auto py-4 ">
-                <Input maxLength={1000} value={message} onChange={(e) => setMessage(e.target.value)} />
+            <section className="flex gap-2 items-center w-11/12 mx-auto py-4 ">
+                <Textarea className="min-h-12" maxLength={1000} value={message} onChange={(e) => setMessage(e.target.value)} />
                 <Button size={"icon"} onClick={handleSend}>
                     <Send size={"20"} />
                 </Button>
