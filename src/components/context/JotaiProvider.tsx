@@ -4,7 +4,7 @@ import { GetRequest } from "@/lib/server-actions/request-helpers/GetRequest"
 import { useAtom, useSetAtom } from "jotai"
 import { io, Socket } from "socket.io-client"
 
-import { ReactNode, useCallback, useEffect, useState } from "react"
+import { ReactNode, useEffect, useState } from "react"
 
 import { Spinner } from "../Spinner"
 import { env } from "@/env"
