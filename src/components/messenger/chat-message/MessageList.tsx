@@ -88,7 +88,7 @@ export function MessageList({
     }, [observeSpinner])
 
     React.useEffect(() => {
-        if (initialMessages?.[0].content !== messages?.[0].content) {
+        if (initialMessages?.[0]?.content !== messages?.[0]?.content) {
             setMessages(initialMessages)
             setPage(0)
         }
