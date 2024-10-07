@@ -30,16 +30,16 @@ export function MessageList({
     const [page, setPage] = useState(0)
 
     const observeSpinner = () => {
-        let timerId: NodeJS.Timeout | undefined = undefined;
+        let locked: boolean = false;
 
         return (entries: IntersectionObserverEntry[]) => {
-            clearTimeout(timerId)
-            timerId = setTimeout(async () => {
-                const [entry] = entries
+            const [entry] = entries
 
-                if (entry?.isIntersecting && messages.length < count) {
-                    try {
-                        const newMessages = (await getMessages(chatId, (page + 1) * 20))?.data?.messages
+            if (!locked && entry?.isIntersecting && messages.length < count) {
+                locked = true
+                getMessages(chatId, (page + 1) * 20)
+                    .then(response => {
+                        const newMessages = response?.data?.messages
                         if (newMessages?.length > 0) {
                             if (messageListRef?.current)
                                 messageListRef.current.scrollTop = newMessages.length * 42
@@ -50,14 +50,11 @@ export function MessageList({
                                 ]
                             })
                             setPage((page) => page + 1)
+                            console.log("new messages")
                         }
-
-
-                    } catch (e) {
-                        console.log(e)
-                    }
-                }
-            }, 3000)
+                    })
+                    .catch(e => console.log(e))
+            }
         }
     }
 
