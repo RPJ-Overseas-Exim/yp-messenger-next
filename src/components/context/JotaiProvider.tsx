@@ -17,7 +17,7 @@ export function JotaiProvider({ children }: { children: ReactNode }) {
     const setRole = useSetAtom(roleAtom)
     const [socket, setSocket] = useAtom(socketAtom)
 
-    const fetchRole = useCallback(async () => {
+    const fetchRole = async () => {
         try {
             const userData = await GetRequest("/user")
             setRole(() => userData?.user?.role)
@@ -27,57 +27,59 @@ export function JotaiProvider({ children }: { children: ReactNode }) {
         } finally {
             setIsLoading(false)
         }
-    }, [setRole])
+    }
 
-    const initializeSocket = useCallback((accessToken: string) => {
-        const socket: Socket<ServerToclientEvents, ClientToServerEvents> = io(env.NEXT_PUBLIC_API_URL, {
-            auth: {
-                token: accessToken
-            }
-        })
-
-        socket?.on("notification", ({ event, message }) => {
-            switch (event) {
-                case "newMessage":
-                    revalPath("/messenger")
-                    toast.success("New message", { position: "top-center" })
-                    break;
-                case "newMessageSent":
-                    console.log("revalled")
-                    revalPath("/messenger")
-                    break;
-                case "error":
-                    console.log(message)
-                    break;
-            }
-        })
-
-        socket?.on("chatError", (e) => {
-            console.log(e)
-            console.log("error")
-        })
-
-        socket?.on("connect_error", (err) => console.log("connection error: ", err))
-
-        socket?.on("newChatBroadcast", () => {
-            revalPath("/messenger")
-            toast.success("Broadcast done", { position: "top-center" })
-        })
-
-        setSocket(socket)
-    }, [setSocket])
 
 
     useEffect(() => {
+        const initializeSocket = (accessToken: string) => {
+            const socket: Socket<ServerToclientEvents, ClientToServerEvents> = io(env.NEXT_PUBLIC_API_URL, {
+                auth: {
+                    token: accessToken
+                }
+            })
+
+            socket?.on("notification", ({ event, message }) => {
+                switch (event) {
+                    case "newMessage":
+                        revalPath("/messenger")
+                        toast.success("New message", { position: "top-center" })
+                        break;
+                    case "newMessageSent":
+                        console.log("revalled")
+                        revalPath("/messenger")
+                        break;
+                    case "error":
+                        console.log(message)
+                        break;
+                }
+            })
+
+            socket?.on("chatError", (e) => {
+                console.log(e)
+                console.log("error")
+            })
+
+            socket?.on("connect_error", (err) => console.log("connection error: ", err))
+
+            socket?.on("newChatBroadcast", () => {
+                revalPath("/messenger")
+                toast.success("Broadcast done", { position: "top-center" })
+            })
+
+            setSocket(socket)
+        }
+
         (async () => {
             const accessToken = await fetchRole()
             initializeSocket(accessToken)
         })()
 
+        console.log("initialized socket")
         return () => {
             socket?.close()
         }
-    }, [initializeSocket, fetchRole, socket])
+    }, [])
 
     if (isLoading) return <Spinner className={""} />
 
