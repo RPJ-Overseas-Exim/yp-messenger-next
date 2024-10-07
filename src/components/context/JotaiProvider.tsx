@@ -46,7 +46,6 @@ export function JotaiProvider({ children }: { children: ReactNode }) {
                         toast.success("New message", { position: "top-center" })
                         break;
                     case "newMessageSent":
-                        console.log("revalled")
                         revalPath("/messenger")
                         break;
                     case "error":
@@ -75,7 +74,6 @@ export function JotaiProvider({ children }: { children: ReactNode }) {
             initializeSocket(accessToken)
         })()
 
-        console.log("initialized socket")
         return () => {
             socket?.close()
         }
