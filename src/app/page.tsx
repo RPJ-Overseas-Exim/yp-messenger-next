@@ -66,13 +66,22 @@ export default function Home() {
                             placeholder={"Enter your email"}
                         />
 
-                        <CustomFormField<LoginForm>
-                            form={form}
-                            type={"password"}
-                            title={"Password"}
-                            name={"password"}
-                            placeholder={"Enter your password"}
-                        />
+                        <div className="w-full flex flex-col">
+                            <CustomFormField<LoginForm>
+                                form={form}
+                                type={"password"}
+                                title={"Password"}
+                                name={"password"}
+                                placeholder={"Enter your password"}
+                            />
+
+                            <Link
+                                href="/forgot"
+                                className="text-xs text-muted-foreground hover:text-foreground self-end"
+                            >
+                                Forgot Password
+                            </Link>
+                        </div>
 
                         <Button type="submit" className="w-full text-lg font-bold" disabled={isLoading}>
                             {isLoading && <Loader2 className="w-4 h-4 animate-spin mr-2" />}

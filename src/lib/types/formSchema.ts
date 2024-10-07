@@ -15,3 +15,10 @@ export const RegisterFormSchema = z.object({
 })
 
 export type RegisterForm = z.infer<typeof RegisterFormSchema>
+
+export const ResetFormSchema = z.object({
+    password: z.string().min(3).max(16),
+    cpassword: z.string().min(3).max(16)
+})
+
+export type ResetForm = z.infer<typeof ResetFormSchema>
