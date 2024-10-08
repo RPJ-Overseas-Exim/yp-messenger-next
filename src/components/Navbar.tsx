@@ -1,11 +1,11 @@
 "use client"
 import React, { useEffect } from "react"
-import { Input } from "./ui/input"
 import { ThemeSwitch } from "./context/ThemeSwitch"
 import Link from "next/link"
 import { useSearchParams, usePathname, useParams } from "next/navigation"
 import { useAtomValue } from "jotai"
 import { socketAtom } from "@/lib/jotai/atoms"
+import { SearchInput } from "./searchInput"
 
 export function Navbar() {
     const pathname = usePathname()
@@ -40,9 +40,7 @@ export function Navbar() {
 
                     <div className="flex gap-2 items-center">
                         <li className="flex gap-2 items-center">
-                            {pathname === "/messenger" &&
-                                <Input placeholder="search" className="p-2 h-auto" />
-                            }
+                            <SearchInput />
                             <div className="rounded-full active:bg-secondary">
                                 <ThemeSwitch />
                             </div>
