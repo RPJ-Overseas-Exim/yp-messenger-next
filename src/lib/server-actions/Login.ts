@@ -7,7 +7,6 @@ import { env } from "@/env";
 export async function Login({ email, password }: { email: string; password: string; }) {
     try {
         const res = await PostRequest("/login", { email, password })
-        console.log("login response: ", res)
         const { token, success, role, message } = res
 
         if (token) {

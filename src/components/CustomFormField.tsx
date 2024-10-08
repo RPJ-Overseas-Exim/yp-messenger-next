@@ -33,14 +33,14 @@ export function CustomFormField<T extends FieldValues>({ form, type, title, name
                 </FormLabel>
 
                 <FormControl>
-                    {name === "password"
+                    {name === "password" || name === "cpassword"
                         ? (
-                            <div className="w-full relative flex items-center">
+                            <div className="w-full relative flex items-center text-foreground">
                                 <Input placeholder={placeholder} {...field} type={isSecure ? type : "text"} />
                                 <Button
                                     type="button"
                                     onClick={() => setIsSecure(!isSecure)}
-                                    className="absolute right-0 bg-transparent hover:bg-transparent active:bg-transparent text-muted">
+                                    className="absolute right-0 bg-transparent hover:bg-transparent active:bg-transparent text-muted-foreground">
                                     {
                                         isSecure
                                             ? <Eye size={24} />

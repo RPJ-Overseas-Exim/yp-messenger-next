@@ -42,7 +42,7 @@ export default function ForgotPassword() {
                             id="email"
                             required
                             placeholder="Enter the email"
-                            className="p-2 rounded-lg bg-background"
+                            className="p-2 rounded-lg bg-background text-foreground"
                             onChange={(e) => setEmail(e.target.value)}
                         />
                     </div>

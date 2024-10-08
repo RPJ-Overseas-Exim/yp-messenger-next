@@ -50,7 +50,7 @@ export default function ResetPassword() {
 
                     <form
                         onSubmit={form.handleSubmit(handleForgotPassword)}
-                        className="flex flex-col gap-y-3 w-full ">
+                        className="flex flex-col gap-y-3 w-full">
 
                         <CustomFormField<ResetForm>
                             form={form}
