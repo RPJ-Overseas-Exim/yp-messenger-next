@@ -9,7 +9,6 @@ export default async function Chats({ searchParams }: { searchParams: { [x: stri
 
     try {
         const res = await GetRequest(`/chats${query ? `?q=${query.toLowerCase()}` : ""}`)
-        console.log("chat list: ", res)
         if (res?.data) chats = res.data
     } catch (e) {
         console.log(e)

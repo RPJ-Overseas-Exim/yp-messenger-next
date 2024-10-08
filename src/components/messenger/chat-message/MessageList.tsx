@@ -10,7 +10,6 @@ import getMessages from "@/lib/server-actions/getMessages";
 import { useSearchParams } from "next/navigation";
 import { DateLine } from "./DateLine"
 import { NewMessageLine } from "./NewMessageLine"
-import revalPath from "@/lib/server-actions/revalPath";
 
 export function MessageList({
     chatId,
