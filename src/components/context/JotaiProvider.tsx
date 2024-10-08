@@ -42,12 +42,15 @@ export function JotaiProvider({ children }: { children: ReactNode }) {
             socket?.on("notification", ({ event, message }) => {
                 switch (event) {
                     case "newMessage":
-                        revalPath("/messenger")
                         toast.success("New message", { position: "top-center" })
+                        revalPath("/messenger")
                         break;
                     case "newMessageSent":
                         revalPath("/messenger")
                         break;
+                    case "leftChat":
+                        revalPath("/messenger")
+                        break
                     case "error":
                         console.log(message)
                         break;
