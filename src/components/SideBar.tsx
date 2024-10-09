@@ -16,25 +16,28 @@ export function SideBar() {
     }, [path])
 
     return (
-        <aside className="w-full border-t-2 border-border py-2">
+        <>
             {condition && (
-                <div className="flex items-center justify-between">
-                    <SideBarButton name="Chats" link="/messenger">
-                        <MessageSquareMore size={24} />
-                    </SideBarButton>
-
-                    <SideBarButton name="Profile" link="/messenger/profile">
-                        <CircleUserRound size={24} />
-                    </SideBarButton>
-
-                    {role === "admin" && (
-                        <SideBarButton name="Broadcast" link="/messenger/broadcast">
-                            <Megaphone size={24} />
+                <aside className="w-full border-t-2 border-border py-2">
+                    <div className="flex items-center justify-between">
+                        <SideBarButton name="Chats" link="/messenger">
+                            <MessageSquareMore size={24} />
                         </SideBarButton>
-                    )}
-                </div>
+
+                        <SideBarButton name="Profile" link="/messenger/profile">
+                            <CircleUserRound size={24} />
+                        </SideBarButton>
+
+                        {role === "admin" && (
+                            <SideBarButton name="Broadcast" link="/messenger/broadcast">
+                                <Megaphone size={24} />
+                            </SideBarButton>
+                        )}
+                    </div>
+                </aside>
+
             )}
-        </aside>
+        </>
     )
 }
 

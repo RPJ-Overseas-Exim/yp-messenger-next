@@ -15,7 +15,7 @@ export default async function Chats({ searchParams }: { searchParams: { [x: stri
     }
 
     return (
-        <main className="h-full">
+        <main className="h-full overflow-auto">
             {
                 chats?.map(chat => {
                     return <Chat key={chat.id} chat={chat} />

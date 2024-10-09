@@ -18,6 +18,13 @@ export function Chat({ chat }: { chat: ChatType | undefined }) {
     const name = role === "admin" ? chat?.memberTwo : chat?.memberOne
     const newMessage = chat !== undefined && chat?.lastSeen < chat?.lastMessageDate
 
+    const getLastMessage = (lastMessage?: string) => {
+        if (lastMessage && lastMessage.length > 35){
+            return lastMessage.slice(0, 35) + "..."
+        }
+        return lastMessage
+    }
+
     return (
         <Link href={`/messenger/${chat?.id}?name=${name}&lastSeen=${chat?.lastSeen}`} className="block active:bg-muted">
             <Card className="flex gap-4 border-none shadow-none items-center bg-transparent py-2 w-11/12 mx-auto">
@@ -27,7 +34,7 @@ export function Chat({ chat }: { chat: ChatType | undefined }) {
                 <CardContent className="p-0 flex items-center w-full justify-between bg-transparent">
                     <div >
                         <CardTitle className="text-lg">{name}</CardTitle>
-                        <p className="text-muted-foreground text-sm">{chat?.lastMessage || "No Messages, Say Hi!"}</p>
+                        <p className="text-muted-foreground text-sm">{getLastMessage(chat?.lastMessage)|| "No Messages, Say Hi!"}</p>
                     </div>
 
                     {/* green dot animation */}
