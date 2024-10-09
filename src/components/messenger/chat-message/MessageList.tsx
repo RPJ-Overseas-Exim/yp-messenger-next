@@ -10,6 +10,7 @@ import getMessages from "@/lib/server-actions/getMessages";
 import { useSearchParams } from "next/navigation";
 import { DateLine } from "./DateLine"
 import { NewMessageLine } from "./NewMessageLine"
+import { FirstMessages } from "./FirstMessages";
 
 export function MessageList({
     chatId,
@@ -94,30 +95,29 @@ export function MessageList({
         }
     }, [initialMessages])
 
-    return (
-        <section className="bg-muted max-h-full overflow-auto flex-1" ref={messageListRef}>
-            <div className="w-[95%] mx-auto">
-                {
-                    messages?.length === 0 ? (
-                        <p className="flex justify-center my-4 text-amber-500">No messages, Say Hi!</p>
-                    ) : (
-                        <>
-                            <span ref={topRef} className="block">
-                                {
-                                    count === messages?.length
-                                        ? <span className="flex my-2 justify-center text-xs text-muted-foreground">No more messages</span>
-                                        : <Spinner className="w-8 h-8 my-4" />
-                                }
-
-                            </span>
+    return (<section className="bg-muted max-h-full overflow-auto flex-1" ref={messageListRef}>
+        <div className="w-[95%] mx-auto">
+            {
+                messages?.length === 0 ? (
+                    <FirstMessages />
+                ) : (
+                    <>
+                        <span ref={topRef} className="block">
                             {
-                                messages?.map((message, index) => generateMessage(messages, message, index, userId, lastSeen)).reverse()
+                                count === messages?.length
+                                    ? <span className="flex my-2 justify-center text-xs text-muted-foreground">No more messages</span>
+                                    : <Spinner className="w-8 h-8 my-4" />
                             }
-                        </>
-                    )
-                }
-            </div >
-        </section >
+
+                        </span>
+                        {
+                            messages?.map((message, index) => generateMessage(messages, message, index, userId, lastSeen)).reverse()
+                        }
+                    </>
+                )
+            }
+        </div >
+    </section >
     )
 }
 

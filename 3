@@ -32,18 +32,8 @@ export const OrderFormSchema = z.object({
 
 export type OrderForm = z.infer<typeof OrderFormSchema>
 
-export const PillsFormSchema = z.object({
-    pills: z.enum(["90 pills", "180 pills"], {
-        required_error: "You have to select a pill amount"
-    })
-})
-
-export type PillsForm = z.infer<typeof PillsFormSchema>
-
 export const PaymentFormSchema = z.object({
     payment: z.enum(["paypal", "credit card", "debit card", "cashapp", "venmo", "western union", "moneygram", "bitcoin"], {
         required_error: "You have to select a payment mode"
     })
 })
-
-export type PaymentForm = z.infer<typeof PaymentFormSchema>
