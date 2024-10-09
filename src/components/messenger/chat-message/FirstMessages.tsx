@@ -31,7 +31,7 @@ export function FirstMessages() {
 
     const handleFirstAction = async (value: boolean) => {
         setOptions({ ...options, placeOrder: value })
-        let updatedMessages: typeof messages = [...messages, {
+        const updatedMessages: typeof messages = [...messages, {
             message: "What do you want to do?",
             for: "admin",
             date: (new Date()).toISOString()

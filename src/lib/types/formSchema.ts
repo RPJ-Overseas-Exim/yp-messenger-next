@@ -1,4 +1,3 @@
-import { products } from "@/public/products"
 import { z } from "zod"
 
 export const LoginFormSchema = z.object({
