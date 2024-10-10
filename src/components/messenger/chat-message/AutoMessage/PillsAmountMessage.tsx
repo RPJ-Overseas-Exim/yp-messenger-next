@@ -1,4 +1,3 @@
-"use client"
 import React from "react"
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -64,10 +63,19 @@ export function PillsAmountMessage({
                 <div className="flex gap-x-2">
                     <Button
                         className="text-sm font-semibold h-auto py-1"
-                        disabled={disabled} type="submit" >Submit</Button>
+                        disabled={disabled}
+                        type="submit"
+                    >
+                        Submit
+                    </Button>
                     <Button
                         className="text-sm font-semibold h-auto py-1"
-                        disabled={disabled} type="button" onClick={handleCancel} >Cancel</Button>
+                        disabled={disabled}
+                        type="button"
+                        onClick={handleCancel}
+                    >
+                        Cancel
+                    </Button>
                 </div>
             </form>
         </Form>

@@ -10,7 +10,7 @@ import getMessages from "@/lib/server-actions/getMessages";
 import { useSearchParams } from "next/navigation";
 import { DateLine } from "./DateLine"
 import { NewMessageLine } from "./NewMessageLine"
-import { FirstMessages } from "./FirstMessages";
+import { AutoMessages } from "./AutoMessage/AutoMessages";
 
 export function MessageList({
     chatId,
@@ -99,7 +99,7 @@ export function MessageList({
         <div className="w-[95%] mx-auto">
             {
                 messages?.length === 0 ? (
-                    <FirstMessages />
+                    <AutoMessages />
                 ) : (
                     <>
                         <span ref={topRef} className="block">

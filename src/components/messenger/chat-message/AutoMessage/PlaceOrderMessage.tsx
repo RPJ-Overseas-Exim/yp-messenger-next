@@ -1,4 +1,3 @@
-"use client"
 import React from "react"
 import { OrderForm, OrderFormSchema } from "@/lib/types/formSchema"
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -83,13 +82,17 @@ export function PlaceOrderMessage({
                     disabled={disabled}
                     className="text-sm font-semibold h-auto py-1"
                     type="submit"
-                >Submit</Button>
+                >
+                    Submit
+                </Button>
                 <Button
                     disabled={disabled}
                     className="text-sm font-semibold h-auto py-1"
                     type="button"
                     onClick={handleCancel}
-                >Cancel Order</Button>
+                >
+                    Cancel Order
+                </Button>
             </div>
 
         </form>
