@@ -19,11 +19,10 @@ export function getMonthInWords(monthInNumber: number) {
     return monthInWord[monthInNumber]
 }
 
-export const DateLine = ({ date }: { date: string; }) => {
-    const d = date.split("/")
-    const dayOfMonth = d[0]
-    const monthInWord = getMonthInWords(Number(d[1]) - 1)
-    const year = d[2]
+export const DateLine = ({ date }: { date: Date; }) => {
+    const dayOfMonth = date.getDate()
+    const monthInWord = getMonthInWords(Number(date.getMonth()))
+    const year = date.getFullYear()
     const showDate = `${dayOfMonth} ${monthInWord} ${year}`
 
     return <div className="text-lg text-zinc-400 w-full text-center">{showDate}</div>

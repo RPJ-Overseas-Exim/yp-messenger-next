@@ -140,8 +140,8 @@ const generateMessage = (messages: MessageType[], message: MessageType, index: n
 
     return (
         <div key={message.id}>
-            {!nextDate.length && <DateLine date={currentDate} />}
-            {nextDate.length > 0 && currentDate > nextDate && <DateLine date={currentDate} />}
+            {!nextDate.length && <DateLine date={date} />}
+            {nextDate.length > 0 && currentDate > nextDate && <DateLine date={date} />}
             {newMessageCondition && <NewMessageLine />}
             {
                 message.senderId === userId
