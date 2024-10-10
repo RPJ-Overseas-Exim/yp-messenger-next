@@ -4,7 +4,7 @@ import React, { useRef, useState } from "react"
 import { Message as MessageType } from "@/lib/types/dto"
 import { Message } from "./Message";
 import { useAtomValue } from "jotai";
-import { socketAtom } from "@/lib/jotai/atoms";
+import { roleAtom, socketAtom } from "@/lib/jotai/atoms";
 import { Spinner } from "@/components/Spinner";
 import getMessages from "@/lib/server-actions/getMessages";
 import { useSearchParams } from "next/navigation";
@@ -24,6 +24,7 @@ export function MessageList({
     count: number
 }) {
     const socket = useAtomValue(socketAtom)
+    const role = useAtomValue(roleAtom)
     const messageListRef = useRef<HTMLElement>(null)
     const topRef = useRef<HTMLElement>(null)
     const [messages, setMessages] = useState(initialMessages)
@@ -98,7 +99,7 @@ export function MessageList({
     return (<section className="bg-muted max-h-full overflow-auto flex-1" ref={messageListRef}>
         <div className="w-[95%] mx-auto">
             {
-                messages?.length === 0 ? (
+                messages?.length === 0 && role !== "admin" ? (
                     <AutoMessages />
                 ) : (
                     <>
