@@ -40,7 +40,7 @@ export function JotaiProvider({ children }: { children: ReactNode }) {
             })
 
             socket?.on("notification", ({ event, message }) => {
-                console.log(event)
+                //console.log(event)
                 switch (event) {
                     case "newMessage":
                         toast.success("New message", { position: "top-center" })

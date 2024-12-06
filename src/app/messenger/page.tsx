@@ -15,7 +15,7 @@ export default async function Chats({ searchParams }: { searchParams: { [x: stri
             chats = res.data.chats ?? []
             onlineCount = res.data?.onlineCount ? res.data.onlineCount : 0
         }
-        console.log(res?.data)
+        //console.log(res?.data)
     } catch (e) {
         console.log(e)
     }
