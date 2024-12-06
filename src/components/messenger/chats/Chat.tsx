@@ -33,7 +33,7 @@ export function Chat({ chat }: { chat: ChatType | undefined }) {
                 </CardHeader>
                 <CardContent className="p-0 flex items-center w-full justify-between bg-transparent">
                     <div >
-                        <CardTitle className="text-lg">{name}</CardTitle>
+                        <CardTitle className="text-lg">{name} <span className="text-green-500 font-xs text-xs">{chat?.online === true && "( Online )"}</span></CardTitle>
                         <p className="text-muted-foreground text-sm">{getLastMessage(chat?.lastMessage)|| "No Messages, Say Hi!"}</p>
                     </div>
 

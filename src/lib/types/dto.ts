@@ -5,7 +5,8 @@ export type Chat = {
     memberTwo: string,
     lastMessage: string,
     lastMessageDate: Date,
-    lastSeen: Date
+    lastSeen: Date,
+    online?: boolean,
 }
 
 export type Message = {

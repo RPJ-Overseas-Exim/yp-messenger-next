@@ -4,10 +4,11 @@ import { ThemeSwitch } from "./context/ThemeSwitch"
 import Link from "next/link"
 import { useSearchParams, usePathname, useParams } from "next/navigation"
 import { useAtomValue } from "jotai"
-import { socketAtom } from "@/lib/jotai/atoms"
+import { roleAtom, socketAtom } from "@/lib/jotai/atoms"
 import { SearchInput } from "./searchInput"
 
 export function Navbar() {
+    const role = useAtomValue(roleAtom)
     const pathname = usePathname()
     const searchParams = useSearchParams()
     const params = useParams()
@@ -40,7 +41,7 @@ export function Navbar() {
 
                     <div className="flex gap-2 items-center">
                         <li className="flex gap-2 items-center">
-                            <SearchInput />
+                            {role === "admin" && <SearchInput />}
                             <div className="rounded-full active:bg-secondary">
                                 <ThemeSwitch />
                             </div>
